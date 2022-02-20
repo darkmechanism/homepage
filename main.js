@@ -55,7 +55,7 @@ q.addEventListener("keydown", function(e) {
                 myYoutubeList = process.split(";;;");
                 break;
             case ">play":
-                opentab(myYoutubeList[Math.floor(Math.random() * 66)]);
+                opentab(myYoutubeList[Math.floor(Math.random() * myYoutubeList.length)]);
                 q.value = ">";
                 break;
             default:
