@@ -1,9 +1,5 @@
-var autofocuscheck = true;
 document.addEventListener("keydown", function(e) {
-    if (autofocuscheck == true) {
-        document.getElementsByClassName("terminal")[0].focus();
-        autofocuscheck = false;
-    } 
+    document.getElementsByClassName("terminal")[0].focus();
 })
 function opentab(url) {
     window.open(url, '_blank').focus();
