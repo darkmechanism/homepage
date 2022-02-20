@@ -2,13 +2,18 @@ var autofocuscheck = true;
 document.addEventListener("keydown", function(e) {
     if (autofocuscheck == true) {
         document.getElementsByClassName("terminal")[0].focus();
-        e.preventDefault();
-        e.stopPropagation();
         autofocuscheck = false;
     } 
 })
 function opentab(url) {
     window.open(url, '_blank').focus();
+}
+var process = localStorage.getItem("youtubelist");
+if (process != null) {
+    var myYoutubeList = process.split(";;;");
+}
+else {
+    var myYoutubeList = [];
 }
 var q = document.getElementsByClassName("terminal")[0];
 q.value = ">";
@@ -43,6 +48,11 @@ q.addEventListener("keydown", function(e) {
             case ">github":
                 opentab("https://github.com");
                 q.value = ">";
+                break;
+            case ">config":
+                localStorage.setItem("youtubelist", prompt("Enter list in YPLY format.", ""));
+                var process = localStorage.getItem("youtubelist");
+                myYoutubeList = process.split(";;;");
                 break;
             case ">play":
                 opentab(myYoutubeList[Math.floor(Math.random() * 66)]);
