@@ -1,3 +1,12 @@
+var autofocuscheck = true;
+document.addEventListener("keydown", function(e) {
+    if (autofocuscheck == true) {
+        document.getElementsByClassName("terminal")[0].focus();
+        e.preventDefault();
+        e.stopPropagation();
+        autofocuscheck = false;
+    } 
+})
 function opentab(url) {
     window.open(url, '_blank').focus();
 }
