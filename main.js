@@ -58,7 +58,24 @@ q.addEventListener("keydown", function(e) {
                 opentab(myYoutubeList[Math.floor(Math.random() * myYoutubeList.length)]);
                 q.value = ">";
                 break;
+            case ">custom":
+                var val = prompt("Enter command name and link to go to, separated by a ';;;'.", "website;;;https://website.com");
+                if (localStorage.getItem("customcommands") == null) {
+                    localStorage.setItem("customcommands", val);   
+                }
+                else {
+                    localStorage.setItem("customcommands", localStorage.getItem("customcommands") + "|||" + val);
+                }
+                break;
             default:
+                var qb = localStorage.getItem("customcommands").split("|||");
+                var qbdic = {}; // turn custom commands into dictionary for easy reading
+                for (var i = 0; i < qb.length; i++) {
+                    qbdic[qb[i].split(";;;")[0]] = qb[i].split(";;;")[1];
+                }
+                if (qbdic[q.value.replace(">", "")] != undefined) {
+                    opentab(qbdic[q.value.replace(">", "")]);
+                }
                 q.value = ">";
                 break;
         }
