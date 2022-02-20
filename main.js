@@ -64,13 +64,15 @@ q.addEventListener("keydown", function(e) {
                 }
                 break;
             default:
-                var qb = localStorage.getItem("customcommands").split("|||");
-                var qbdic = {}; // turn custom commands into dictionary for easy reading
-                for (var i = 0; i < qb.length; i++) {
-                    qbdic[qb[i].split(";;;")[0]] = qb[i].split(";;;")[1];
-                }
-                if (qbdic[q.value.replace(">", "")] != undefined) {
-                    opentab(qbdic[q.value.replace(">", "")]);
+                if (localStorage.getItem("customcommands") != null) {
+                    var qb = localStorage.getItem("customcommands").split("|||");
+                    var qbdic = {}; // turn custom commands into dictionary for easy reading
+                    for (var i = 0; i < qb.length; i++) {
+                        qbdic[qb[i].split(";;;")[0]] = qb[i].split(";;;")[1];
+                    }
+                    if (qbdic[q.value.replace(">", "")] != undefined) {
+                        opentab(qbdic[q.value.replace(">", "")]);
+                    }
                 }
                 q.value = ">";
                 break;
