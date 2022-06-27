@@ -1,6 +1,9 @@
+:root {
+    --bgimage: "url(me2.jpg)";
+}
 body {
     background-size: cover;
-    background-image: url("me2.jpg");
+    background-image: var(--bgimage);
     background-position: center;
 }
 .time {
@@ -29,4 +32,21 @@ body {
     left: 20px;
     width: calc(100vw - 40px);
     box-shadow: rgba(255,255,255, 0.3) 0 0 10px;
+}
+
+#errtext {
+    width: 20ch;
+    margin: 0;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, 0%);
+    margin-top: 13ch;
+    color: red;
+    background: black;
+    text-align: center;
+    border-radius: 10px;
+    padding: 10px;
+    font-family: monospace;
+    display: none;
 }

@@ -11,8 +11,14 @@ if (process != null) {
 else {
     var myYoutubeList = [];
 }
+var bgimage = localStorage.getItem("bgimage");
+if (bgimage != null) {
+    document.documentElement.style.setProperty('--bgimage', bgimage);
+}
+else {
+    document.documentElement.style.setProperty('--bgimage', "url(me2.jpg)");
+}
 var q = document.getElementsByClassName("terminal")[0];
-q.value = ">";
 function checkTime(i) {
     if (i < 10) {i = "0" + i}; 
     return i;
@@ -29,30 +35,35 @@ setInterval( function() {
 q.addEventListener("keydown", function(e) {
     if (e.code == "Enter") {
         switch (q.value) {
+            case ">background":
+                localStorage.setItem("bgimage", "url(" + prompt("Enter link to new background image.", "") + ")");
+                document.getElementById("errtext").style.display = "none";
+                break;
             case ">google":
                 opentab("https://google.com");
-                q.value = ">";
+                document.getElementById("errtext").style.display = "none";
                 break;
             case ">youtube":
                 opentab("https://youtube.com");
-                q.value = ">";
+                document.getElementById("errtext").style.display = "none";
                 break;
             case ">twitter":
                 opentab("https://twitter.com");
-                q.value = ">";
+                document.getElementById("errtext").style.display = "none";
                 break;
             case ">github":
                 opentab("https://github.com");
-                q.value = ">";
+                document.getElementById("errtext").style.display = "none";
                 break;
             case ">config":
                 localStorage.setItem("youtubelist", prompt("Enter list in YPLY format.", ""));
                 var process = localStorage.getItem("youtubelist");
                 myYoutubeList = process.split(";;;");
+                document.getElementById("errtext").style.display = "none";
                 break;
             case ">play":
                 opentab(myYoutubeList[Math.floor(Math.random() * myYoutubeList.length)]);
-                q.value = ">";
+                document.getElementById("errtext").style.display = "none";
                 break;
             case ">custom":
                 var val = prompt("Enter command name and link to go to, separated by a ';;;'.", "website;;;https://website.com");
@@ -62,9 +73,10 @@ q.addEventListener("keydown", function(e) {
                 else {
                     localStorage.setItem("customcommands", localStorage.getItem("customcommands") + "|||" + val);
                 }
+                document.getElementById("errtext").style.display = "none";
                 break;
             default:
-                if (localStorage.getItem("customcommands") != null) {
+                if (q.value.startsWith(">") && localStorage.getItem("customcommands") != null) {
                     var qb = localStorage.getItem("customcommands").split("|||");
                     var qbdic = {}; // turn custom commands into dictionary for easy reading
                     for (var i = 0; i < qb.length; i++) {
@@ -73,13 +85,16 @@ q.addEventListener("keydown", function(e) {
                     if (qbdic[q.value.replace(">", "")] != undefined) {
                         opentab(qbdic[q.value.replace(">", "")]);
                     }
+                    document.getElementById("errtext").style.display = "none";
                 }
-                q.value = ">";
+                else if (!q.value.startsWith(">")) {
+                    opentab("https://google.com/search?q=" + q.value);
+                    document.getElementById("errtext").style.display = "none";
+                }
+                else if (q.value.startsWith(">")) {
+                    document.getElementById("errtext").style.display = "block";
+                }
                 break;
         }
-    }
-    else if (e.code == "Backspace" && q.value == ">") {
-        e.preventDefault();
-        e.stopPropagation();
     }
 });
